@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.IO;
 
 namespace yilan2
 {
     class Program
     {
-
-        
+             
 
 
         static void Main(string[] args)
@@ -23,10 +23,9 @@ namespace yilan2
             duvarYerleştir(board);
 
             harfAtama(board);
-            for (int q = 0; q <= sayi; q++)
-             duvarAtama(board);
             
-            
+            duvarAtama(board,sayi);
+                  
             tabloYazma(board);
 
 
@@ -44,18 +43,12 @@ namespace yilan2
             //ana döngü
             do
             {
-                if ((snakedir == 1 && board[snakex[0], snakey[0] - 1] == "#") || (snakedir == 2 && board[snakex[0], snakey[0] + 1] == "#") || (snakedir == 3 && board[snakex[0] - 1, snakey[0]] == "#") || (snakedir == 4 && board[snakex[0] + 1, snakey[0] - 1] == "#"))
+                if ((snakedir == 1 && board[snakex[0], snakey[0] - 1] == "#") || (snakedir == 2 && board[snakex[0], snakey[0] + 1] == "#") || (snakedir == 3 && board[snakex[0] - 1, snakey[0]] == "#") || (snakedir == 4 && board[snakex[0] + 1, snakey[0]] == "#"))
                 {
-                    Console.Clear();
-                    Console.WriteLine(@"
-
-
-
-
-
-                                                                                    Game Over!!!");
+                    endGame();
                     break;
                 }
+
                 
                     Thread.Sleep(80);
                 if (Console.KeyAvailable)
@@ -108,14 +101,25 @@ namespace yilan2
                 }
                 Console.SetCursorPosition(oldsnakex[0], oldsnakey[0]);
                 Console.Write(" ");
-                oldsnakex[0] = snakex[0];
-                oldsnakey[0] = snakey[0];
                 Console.SetCursorPosition(snakex[0], snakey[0]);
                 Console.Write(yılan[0]);
-                Console.SetCursorPosition(oldsnakex[0], oldsnakey[0]);
-                Console.Write(yılan[0]);
+                oldsnakex[0] = snakex[0]; oldsnakey[0] = snakey[0];
+
             } while (true);
             Console.ReadLine();
+        }
+
+        private static void endGame()
+        {
+
+            Console.Clear();
+            Console.WriteLine(@"
+
+
+
+
+
+                                                                                    Game Over!!!");
         }
         static void duvarYerleştir(string[,] board)
         {
@@ -146,32 +150,37 @@ namespace yilan2
             }
 
         }
-        private static void duvarAtama(string[,] board)
+        private static void duvarAtama(string[,] board, int sayi)
         {
-            Random rnd = new Random();
-            int vertical;
-            int x;
-            int y;
-            vertical = rnd.Next(0, 2);
-            if (vertical == 0)
+            for (int zz = 1; zz <= sayi;zz++)
             {
-                do
+
+
+                Random rnd = new Random();
+                int vertical;
+                int x;
+                int y;
+                vertical = rnd.Next(0, 2);
+                if (vertical == 0)
                 {
-                    x = rnd.Next(2, board.GetLength(0) - 1);
-                    y = rnd.Next(2, board.GetLength(1) - 1);
-                } while (board[x, y] != " " && board[x, y + 1] != " " && board[x, y + 2] != " " && board[x, y + 3] != " " && board[x, y + 4] != " " && board[x, y + 5] != " " && board[x, y + 6] != " " && board[x, y + 7] != " " && board[x, y + 8] != " " && board[x, y + 9] != " ");
-                for (int i = 0; i < 11; i++)
-                    board[x, y + i + 1] = "#";
-            }
-            else
-            {
-                do
+                    do
+                    {
+                        x = rnd.Next(3, board.GetLength(0) - 3);
+                        y = rnd.Next(3, board.GetLength(1) - 13);
+                    } while (board[x, y] != " " && board[x, y + 1] != " " && board[x, y + 2] != " " && board[x, y + 3] != " " && board[x, y + 4] != " " && board[x, y + 5] != " " && board[x, y + 6] != " " && board[x, y + 7] != " " && board[x, y + 8] != " " && board[x, y + 9] != " ");
+                    for (int i = 0; i <= 9; i++)
+                        board[x, y + i] = "#";
+                }
+                else
                 {
-                    x = rnd.Next(2, board.GetLength(0) - 1);
-                    y = rnd.Next(2, board.GetLength(1) - 1);
-                } while (board[x, y] != " " && board[x + 1, y] != " " && board[x + 2, y + 2] != " " && board[x + 3, y] != " " && board[x + 4, y] != " " && board[x + 5, y] != " " && board[x + 6, y] != " " && board[x + 7, y] != " " && board[x + 8, y] != " " && board[x + 9, y] != " ");
-                for (int i = 0; i < 11; i++)
-                    board[x + i + 1, y] = "#";
+                    do
+                    {
+                        x = rnd.Next(3, board.GetLength(0) - 13);
+                        y = rnd.Next(3, board.GetLength(1) - 3);
+                    } while (board[x, y] != " " && board[x + 1, y] != " " && board[x + 2, y + 2] != " " && board[x + 3, y] != " " && board[x + 4, y] != " " && board[x + 5, y] != " " && board[x + 6, y] != " " && board[x + 7, y] != " " && board[x + 8, y] != " " && board[x + 9, y] != " ");
+                    for (int i = 0; i <= 9; i++)
+                        board[x + i, y] = "#";
+                }
             }
         }
 
@@ -186,7 +195,7 @@ namespace yilan2
                 Console.WriteLine();
             }
         }
-
+       
         public static void harfAtama(string[,] board)
         {
             string alfabe = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ";
