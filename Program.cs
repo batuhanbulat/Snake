@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.IO;
 
-namespace yilan2
+namespace yilan3
 {
     class Program
     {
-             
+
 
 
         static void Main(string[] args)
@@ -23,18 +23,18 @@ namespace yilan2
             duvarYerleştir(board);
 
             harfAtama(board);
-            
-            duvarAtama(board,sayi);
-                  
+
+            duvarAtama(board, sayi);
+
             tabloYazma(board);
 
 
-            int [] snakex = new int[30];
-            int [] snakey = new int[30];
-            int [] oldsnakex = new int[30];
-            int [] oldsnakey = new int[30]; 
+            int[] snakex = new int[30];
+            int[] snakey = new int[30];
+            int[] oldsnakex = new int[30];
+            int[] oldsnakey = new int[30];
             int snakedir = 0;
-            string [] yılan ={"%","+"};
+            string[] yılan = { "%", "+" };
             snakex[0] = 10;
             snakey[0] = 10;
             oldsnakex[0] = 9;
@@ -43,29 +43,29 @@ namespace yilan2
             //ana döngü
             do
             {
-                if (snakedir == 0 && board[snakex[0]+1, snakey[0]] == "#")
+                if (snakedir == 0 && board[snakey[0] + 1, snakex[0]] == "#")
                 {
                     endGame();
                     break;
                 }
-                else if (snakedir == 1 && board[snakex[0], snakey[0] -1] == "#")
-                    {
+                else if (snakedir == 1 && board[snakey[0], snakex[0] - 1] == "#")
+                {
                     endGame();
                     break;
                 }
-                else if  (snakedir == 2 && board[snakex[0] , snakey[0]+1] == "#")
-                    {
+                else if (snakedir == 2 && board[snakey[0], snakex[0] + 1] == "#")
+                {
                     endGame();
                     break;
                 }
-                else if (snakedir == 3 && board[snakex[0] + 1, snakey[0]] == "#")
-                    {
+                else if (snakedir == 3 && board[snakey[0] + 1, snakex[0]] == "#")
+                {
                     endGame();
                     break;
                 }
 
-                
-                    Thread.Sleep(80);
+
+                Thread.Sleep(80);
                 if (Console.KeyAvailable)
                 {
                     cki = Console.ReadKey(true);
@@ -167,7 +167,7 @@ namespace yilan2
         }
         private static void duvarAtama(string[,] board, int sayi)
         {
-            for (int zz = 1; zz <= sayi;zz++)
+            for (int zz = 1; zz <= sayi; zz++)
             {
 
 
@@ -210,7 +210,7 @@ namespace yilan2
                 Console.WriteLine();
             }
         }
-       
+
         public static void harfAtama(string[,] board)
         {
             string alfabe = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ";
