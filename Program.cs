@@ -43,8 +43,23 @@ namespace yilan2
             //ana döngü
             do
             {
-                if ((snakedir == 1 && board[snakex[0], snakey[0] - 1] == "#") || (snakedir == 2 && board[snakex[0], snakey[0] + 1] == "#") || (snakedir == 3 && board[snakex[0] - 1, snakey[0]] == "#") || (snakedir == 4 && board[snakex[0] + 1, snakey[0]] == "#"))
+                if (snakedir == 0 && board[snakex[0]+1, snakey[0]] == "#")
                 {
+                    endGame();
+                    break;
+                }
+                else if (snakedir == 1 && board[snakex[0], snakey[0] -1] == "#")
+                    {
+                    endGame();
+                    break;
+                }
+                else if  (snakedir == 2 && board[snakex[0] , snakey[0]+1] == "#")
+                    {
+                    endGame();
+                    break;
+                }
+                else if (snakedir == 3 && board[snakex[0] + 1, snakey[0]] == "#")
+                    {
                     endGame();
                     break;
                 }
