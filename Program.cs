@@ -65,15 +65,19 @@ namespace yilan3
 
             tabloYazma(board,deyim1);
 
-
+            Random rnd1=new Random();
             int[] snakex = new int[30];
             int[] snakey = new int[30];
             int[] oldsnakex = new int[30];
             int[] oldsnakey = new int[30];
-            int snakedir = 0;
+            int snakedir;
+            snakedir = rnd1.Next(0, 4); //yılanın gideceği yönü random atama
             string[] yılan = { "%", "+" };
-            snakex[0] = 10;
-            snakey[0] = 10;
+            while(board[snakey[0],snakex[0]]!=" ") //yılanınn yerini random atama
+            {
+            snakex[0] =rnd1.Next(2,58);
+            snakey[0] =rnd1.Next(2,23);
+            }
             oldsnakex[0] = 9;
             oldsnakey[0] = 9;
             ConsoleKeyInfo cki;
@@ -245,9 +249,10 @@ Select your level (1-4)   :");
         }
         private static void duvarAtama(string[,] board, int sayi)           //......................................random duvar atama
         {
-            for (int zz = 1; zz <= sayi; zz++)
-            {
+            int counter=0;
 
+            while(counter!=sayi)
+            {
 
                 Random rnd = new Random();
                 int vertical;
@@ -262,7 +267,8 @@ Select your level (1-4)   :");
                         y = rnd.Next(3, board.GetLength(1) - 13);
                     } while (board[x, y] != " " && board[x, y + 1] != " " && board[x, y + 2] != " " && board[x, y + 3] != " " && board[x, y + 4] != " " && board[x, y + 5] != " " && board[x, y + 6] != " " && board[x, y + 7] != " " && board[x, y + 8] != " " && board[x, y + 9] != " ");
                     for (int i = 0; i <= 9; i++)                            //......................................duvarı atama
-                        board[x, y + i] = "#"; 
+                        board[x, y + i] = "#";
+                    counter++;
                 }
                 else
                 {
@@ -273,6 +279,7 @@ Select your level (1-4)   :");
                     } while (board[x, y] != " " && board[x + 1, y] != " " && board[x + 2, y + 2] != " " && board[x + 3, y] != " " && board[x + 4, y] != " " && board[x + 5, y] != " " && board[x + 6, y] != " " && board[x + 7, y] != " " && board[x + 8, y] != " " && board[x + 9, y] != " ");
                     for (int i = 0; i <= 9; i++)                             //......................................duvarı atama
                         board[x + i, y] = "#";
+                    counter++;
                 }
             }
         }
