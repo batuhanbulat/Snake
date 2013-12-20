@@ -15,10 +15,61 @@ namespace yilan3
 
         static void Main(string[] args)
         {
-            int sayi;
-            sayi = Convert.ToInt32(Console.ReadLine());
-            Console.Clear();
+            Console.SetWindowSize(100,27);
+            int sayi=0;
+            string deyim1="";
 
+            int sayi1 = 0;
+
+            while (sayi1 < 1 || sayi1 > 4)
+            {
+                Console.WriteLine(@"
+ 
+
+                                                                       #               
+ ###                                                                   ##              
+ ###    ######## ######## ######## ######## #######    ###  ## ###  ## ###  ## ########
+ ###                ###      ###                  ##   ###  ## ###  ## #### ##    ###  
+ ###     #######    ###      ###    #######  ######    ####### ###  ## #######    ###  
+ ###     ###        ###      ###    ###      ##  ##    ###  ## ###  ## ### ###    ###  
+ ####### #######    ###      ###    #######  ##   ##   ###  ##  #####  ###  ##    ###  
+                                                       ###                   #         
+
+Select your level (1-4)   :");
+
+
+                string[] deyim = new string[25];
+                sayi1 = Convert.ToInt32(Console.ReadLine());
+                Console.Clear();
+                StreamReader f = File.OpenText("c:\\statements.txt");
+                for (int st = 0; st <= 24; st++)
+                {
+                    deyim[st] = Convert.ToString(f.ReadLine());
+
+                }
+                Random rnd = new Random();
+                if (sayi1 == 1)
+                {
+                    sayi = 2;
+                    deyim1 = deyim[rnd.Next(1, 5)];
+                }
+                else if (sayi1 == 2)
+                {
+                    sayi = 4;
+                    deyim1 = deyim[rnd.Next(5, 10)];
+                }
+                else if (sayi1 == 3)
+                {
+                    sayi = 6;
+                    deyim1 = deyim[rnd.Next(10, 15)];
+                }
+                else
+                {
+                    sayi = 8;
+                    deyim1 = deyim[rnd.Next(1, 5)];
+                }
+                deyim1 = deyim1.Remove(0, 2);
+            }
             string[,] board = new string[27, 62];
             duvarYerleştir(board);
 
@@ -26,7 +77,7 @@ namespace yilan3
 
             duvarAtama(board, sayi);
 
-            tabloYazma(board);
+            tabloYazma(board,deyim1);
 
 
             int[] snakex = new int[30];
@@ -58,8 +109,10 @@ namespace yilan3
                     endGame();
                     break;
                 }
+                
                 else if (snakedir == 3 && board[snakey[0] + 1, snakex[0]] == "#")
                 {
+                    
                     endGame();
                     break;
                 }
@@ -119,10 +172,31 @@ namespace yilan3
                 Console.SetCursorPosition(snakex[0], snakey[0]);
                 Console.Write(yılan[0]);
                 oldsnakex[0] = snakex[0]; oldsnakey[0] = snakey[0];
-
+                if (snakedir == 2 && snakex[0]==58)
+                {
+                    Thread.Sleep(10);
+                    endGame(); 
+                    break;
+                }
+                else if (snakedir == 0 && snakey[0]==23)
+                {
+                    Thread.Sleep(10);
+                    endGame();
+                    break;
+                }
+                else if (snakedir == 3 && snakey[0] == 1)
+                {
+                    Thread.Sleep(100);
+                    endGame();
+                    break;
+                }
             } while (true);
             Console.ReadLine();
         }
+
+       
+           
+         
 
         private static void endGame()
         {
@@ -134,7 +208,8 @@ namespace yilan3
 
 
 
-                                                                                    Game Over!!!");
+
+                            Game Over!!!");
         }
         static void duvarYerleştir(string[,] board)
         {
@@ -199,7 +274,7 @@ namespace yilan3
             }
         }
 
-        public static void tabloYazma(string[,] board)
+        public static void tabloYazma(string[,] board,string deyim1)
         {
             for (int i = 1; i < board.GetLength(0) - 1; i++)
             {
@@ -209,6 +284,8 @@ namespace yilan3
                 }
                 Console.WriteLine();
             }
+            Console.SetCursorPosition(67, 15);
+            Console.Write(deyim1);
         }
 
         public static void harfAtama(string[,] board)
@@ -228,5 +305,6 @@ namespace yilan3
                 board[x, y] = Convert.ToString(alfabe[o]);
             }
         }
+    
     }
 }
